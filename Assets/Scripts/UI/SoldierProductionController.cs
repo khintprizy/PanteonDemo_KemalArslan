@@ -19,7 +19,7 @@ public class SoldierProductionController : MonoBehaviour
             buttons.Clear();
         }
 
-        prefabManager = PrefabManager.Instance;
+        prefabManager = GameManagers.Instance.PrefabManager;
 
         for (int i = 0; i < soldierDatas.Length; i++)
         {

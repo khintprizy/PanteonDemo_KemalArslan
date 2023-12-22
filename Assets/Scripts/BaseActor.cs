@@ -15,6 +15,7 @@ public class BaseActor : MonoBehaviour
     private SpriteRenderer actorSprite;
     [SerializeField] private Transform actorGraphics;
     [SerializeField] private TextMeshPro actorNameText;
+    [SerializeField] private GameObject fakeOutline;
     private List<GridCell> occupiedCells = new List<GridCell>();
     protected GameManagers gameManagers;
 
@@ -34,20 +35,20 @@ public class BaseActor : MonoBehaviour
         gameManagers = GameManagers.Instance;
     }
 
-    public virtual void TakeDamage(float damageAmount, Action callback)
+    public virtual void TakeDamage(float damageAmount)
     {
         currentHealth -= damageAmount;
 
         if (currentHealth <= 0 )
         {
-            callback?.Invoke();
             Die();
         }
     }
 
     protected virtual void Die()
     {
-        //OnActorDie?.Invoke();
+        // I subscribed all the attacking soldiers to this event, so all of them will stop attacking
+        OnActorDie?.Invoke();
 
         SetEmptyOccupiedCells();
         Destroy(gameObject);
@@ -78,7 +79,14 @@ public class BaseActor : MonoBehaviour
 
     public virtual void OnActorClickedOnBoard()
     {
+        gameManagers.GridManager.SetSelectedActor(this);
+        fakeOutline.SetActive(true);
+    }
 
+    public virtual void ActorDeselected()
+    {
+        gameManagers.GridManager.SetSelectedActor(null);
+        fakeOutline.SetActive(false);
     }
 
     public virtual void ActionWhileMoving(GridCell cell)

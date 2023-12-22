@@ -4,29 +4,12 @@ using UnityEngine;
 
 public class Pathfinding : MonoBehaviour
 {
-    private GridManager gridManager;
+    // This system implements A* pathfinding algorithm
+
     private Grid grid;
 
-    public int a, b, c, d;
-
-    private void Start()
+    public List<GridCell> FindPath(GridCell startCell, GridCell targetCell)
     {
-        gridManager = GetComponent<GridManager>();
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            FindPath(a, b, c, d);
-        }
-    }
-
-    public List<GridCell> FindPath(int startX, int startY, int targetX, int targetY)
-    {
-        GridCell startCell = grid.GetGridCell(startX, startY);
-        GridCell targetCell = grid.GetGridCell(targetX, targetY);
-
         List<GridCell> openSet = new List<GridCell>();
         HashSet<GridCell> closedSet = new HashSet<GridCell>();
         openSet.Add(startCell);
@@ -50,9 +33,7 @@ public class Pathfinding : MonoBehaviour
                 return RetracePath(startCell, targetCell);
             }
 
-            //List<GridCell> neighbors = grid.GetNeighbours(currentCell);
             List<GridCell> neighbors = currentCell.GetNeighbours();
-
 
             for (int i = 0; i < neighbors.Count; i++)
             {

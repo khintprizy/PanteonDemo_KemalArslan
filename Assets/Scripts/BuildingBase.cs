@@ -14,13 +14,14 @@ public class BuildingBase : BaseActor
         transform.position = targetCell.GetCellPosition();
 
         SetActorOnTheGrid(grid, targetCell.GetCellXIndex(), targetCell.GetCellYIndex());
+        ActorDeselected();
     }
 
     public override void OnActorClickedOnBoard()
     {
         base.OnActorClickedOnBoard();
         UIManager.Instance.GetInformationMenuController().SetInfoMenu(this);
-        gameManagers.GridManager.SetSelectedActor(this);
+        
         gameManagers.EventManager.OnBuildingSelected?.Invoke();
     }
 

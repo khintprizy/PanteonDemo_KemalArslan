@@ -16,10 +16,11 @@ public class GridManager : MonoBehaviour
     private BaseActor currentActor;
     private BaseActor selectedActor;
 
-    
+    private PrefabManager prefabManager;
 
     private void Start()
     {
+        prefabManager = GameManagers.Instance.PrefabManager;
         InitGrid();
     }
 
@@ -99,7 +100,7 @@ public class GridManager : MonoBehaviour
     {
         if (currentActor != null) return;
 
-        BuildingBase building = PrefabManager.Instance.GetBuildingBase();
+        BuildingBase building = prefabManager.GetBuildingBase();
         building.Init(buildingData, PixelToWorldSize(sizeByPixel));
         SetCurrentActor(building);
     }
@@ -122,7 +123,7 @@ public class GridManager : MonoBehaviour
 
         if (emptyCell == null) return;
 
-        SoldierBase soldier = PrefabManager.Instance.GetSoldierBase();
+        SoldierBase soldier = prefabManager.GetSoldierBase();
         soldier.Init(soldierData, PixelToWorldSize(sizeByPixel));
         TryToPlaceActor(emptyCell, soldier);
     }

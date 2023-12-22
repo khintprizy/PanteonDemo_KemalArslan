@@ -8,6 +8,8 @@ public class SoldierBase : BaseActor
     private Coroutine attackCr;
     SoldierData soldierData;
 
+    private BaseActor targetActor;
+
     public override void Init(ActorData actorData, float cellSize)
     {
         base.Init(actorData, cellSize);
@@ -34,13 +36,13 @@ public class SoldierBase : BaseActor
         GridCell startCell = GetFirstOccupiedCell();
 
         // I got the path here
-        List<GridCell> path = gameManagers.Pathfinder.FindPath(startCell.GetCellXIndex(), startCell.GetCellYIndex(), targetCell.GetCellXIndex(), targetCell.GetCellYIndex());
+        List<GridCell> path = gameManagers.Pathfinder.FindPath(startCell, targetCell);
 
         gameManagers.EventManager.OnSoldierStartToMove?.Invoke();
 
         if (path == null)
         {
-            gameManagers.GridManager.SetSelectedActor(null);
+            ActorDeselected();
             yield break;
         }
 
@@ -78,8 +80,7 @@ public class SoldierBase : BaseActor
     IEnumerator AttackCr(BaseActor targetActor)
     {
         if (targetActor == null) yield break;
-        Debug.Log(this.name + " Attacked " + targetActor.name);
-        targetActor.TakeDamage(soldierData.attackPower, StopAttacking);
+        targetActor.TakeDamage(soldierData.attackPower);
 
         yield return new WaitForSeconds(soldierData.attackSpeed);
 
@@ -89,22 +90,28 @@ public class SoldierBase : BaseActor
 
     private void StartAttacking(BaseActor targetActor)
     {
-        Debug.Log("Attacking started");
-
-        //targetActor.OnActorDie += StopAttacking;
+        this.targetActor = targetActor;
+        targetActor.OnActorDie += StopAttacking;
         attackCr = StartCoroutine(AttackCr(targetActor));
     }
 
     private void StopAttacking()
     {
-        Debug.Log(attackCr);
-
+        //targetActor.OnActorDie -= StopAttacking;
         if (attackCr != null)
         {
             StopCoroutine(attackCr);
-
-            Debug.Log("Soldier stopped attacking");
             attackCr = null;
+        }
+    }
+
+    protected override void Die()
+    {
+        base.Die();
+
+        if (targetActor != null)
+        {
+            targetActor.OnActorDie -= StopAttacking;
         }
     }
 
@@ -113,7 +120,6 @@ public class SoldierBase : BaseActor
         base.OnActorClickedOnBoard();
 
         UIManager.Instance.GetInformationMenuController().SetThePanel(false);
-        gameManagers.GridManager.SetSelectedActor(this);
     }
 
     public override void OnRightClicked(GridCell cell, Grid grid)
@@ -133,12 +139,12 @@ public class SoldierBase : BaseActor
             if (closestCell == null) return;
 
             StartTweenMovement(grid, closestCell, targetActor);
-            gameManagers.GridManager.SetSelectedActor(null);
+            ActorDeselected();
         }
         else
         {
             StartTweenMovement(grid, cell, null);
-            gameManagers.GridManager.SetSelectedActor(null);
+            ActorDeselected();
         }
     }
 

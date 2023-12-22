@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PrefabManager : SingletonMaker<PrefabManager>
+public class PrefabManager : MonoBehaviour
 {
     [SerializeField] private GameObject buildingPrefab;
     [SerializeField] private GameObject soldierPrefab;

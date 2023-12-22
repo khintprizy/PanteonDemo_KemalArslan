@@ -9,7 +9,7 @@ public class ProductionMenuController : MonoBehaviour
 
     private void Start()
     {
-        prefabManager = PrefabManager.Instance;
+        prefabManager = GameManagers.Instance.PrefabManager;
 
         for (int i = 0; i < buildingsOnTheMenu.Count; i++)
         {

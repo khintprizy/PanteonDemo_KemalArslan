@@ -276,10 +276,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b8a4c618ca1aa44ea8c8ed1f8942d2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  a: 2
-  b: 2
-  c: 7
-  d: 8
 --- !u!114 &282830969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,6 +291,7 @@ MonoBehaviour:
   pathfinder: {fileID: 282830968}
   gridManager: {fileID: 282830965}
   eventManager: {fileID: 282830970}
+  prefabManager: {fileID: 282830967}
 --- !u!114 &282830970
 MonoBehaviour:
   m_ObjectHideFlags: 0
