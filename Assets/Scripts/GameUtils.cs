@@ -16,7 +16,7 @@ public class ActorData
 [Serializable]
 public class BuildingData : ActorData
 {
-    public SoldierData[] producableSoldiers;
+    public BuildingType buildingType;
 }
 
 [Serializable]
@@ -25,4 +25,10 @@ public class SoldierData : ActorData
     public float attackPower;
     public float attackSpeed;
     public float movementSpeed;
+}
+
+public enum BuildingType
+{
+    BuildingNormal = 0,
+    BuildingWithSoldiers = 1,
 }

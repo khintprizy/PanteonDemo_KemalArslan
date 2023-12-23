@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,9 +32,14 @@ public class InformationMenuController : MonoBehaviour
         buildingImage.sprite = data.actorSprite;
         description.text = data.actorDescription;
 
-        soldierProductionController.gameObject.SetActive(data.producableSoldiers.Length > 0);
+        soldierProductionController.gameObject.SetActive(false);
+    }
 
-        soldierProductionController.Init(data.producableSoldiers);
+    public void SetSoldiers(SoldierData[] soldierDatas)
+    {
+        soldierProductionController.gameObject.SetActive(true);
+
+        soldierProductionController.Init(soldierDatas);
     }
 
     public void SetThePanel(bool isActive)

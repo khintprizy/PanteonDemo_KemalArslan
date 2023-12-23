@@ -7,7 +7,7 @@ public class ProductionMenuController : MonoBehaviour
     [SerializeField] List<BuildingData> buildingsOnTheMenu;
     private PrefabManager prefabManager;
 
-    private void Start()
+    public void Init(List<BuildingData> buildingsOnTheMenu)
     {
         prefabManager = GameManagers.Instance.PrefabManager;
 

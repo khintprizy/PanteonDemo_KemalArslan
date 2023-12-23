@@ -18,14 +18,14 @@ public class GridManager : MonoBehaviour
 
     private PrefabManager prefabManager;
 
-    private void Start()
+    //private void Start()
+    //{
+    //    InitGrid();
+    //}
+
+    public void InitGrid()
     {
         prefabManager = GameManagers.Instance.PrefabManager;
-        InitGrid();
-    }
-
-    private void InitGrid()
-    {
         grid = new Grid(gridWidth, gridHeight, PixelToWorldSize(sizeByPixel));
         gridMapController.SetGridMap(gridWidth, gridHeight, PixelToWorldSize(sizeByPixel));
         GetComponent<Pathfinding>().SetGrid(grid);
@@ -49,6 +49,9 @@ public class GridManager : MonoBehaviour
         {
             if (cell.IsCellOccupied() && !grid.IsOutOfBounds(worldPos))
             {
+                if (selectedActor != null)
+                    selectedActor.ActorDeselected(); 
+
                 // This actor could be building or soldier
                 cell.GetOccupantActor().OnActorClickedOnBoard();
             }
@@ -100,7 +103,10 @@ public class GridManager : MonoBehaviour
     {
         if (currentActor != null) return;
 
-        BuildingBase building = prefabManager.GetBuildingBase();
+        if (selectedActor != null)
+            selectedActor.ActorDeselected();
+
+        BuildingBase building = prefabManager.GetBuildingBase(buildingData);
         building.Init(buildingData, PixelToWorldSize(sizeByPixel));
         SetCurrentActor(building);
     }
@@ -108,6 +114,7 @@ public class GridManager : MonoBehaviour
     public void CreateSoldier(SoldierData soldierData)
     {
         if (currentActor != null) return;
+
 
         List<GridCell> emptyCells = selectedActor.GetEmptyNeighbors();
         GridCell emptyCell = null;

@@ -186,6 +186,7 @@ GameObject:
   - component: {fileID: 282830967}
   - component: {fileID: 282830968}
   - component: {fileID: 282830970}
+  - component: {fileID: 282830971}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -260,7 +261,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eaf27206bdf5ef4dbae6097042287ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingPrefab: {fileID: 4557711225302133155, guid: 14afbaa29567f02499a5435861416742, type: 3}
+  buildingPrefabDatas:
+  - buildingPrefab: {fileID: 662294240426233057, guid: 159fcd07c5e145c4e83ed74e718550e8, type: 3}
+    buildingType: 1
+  - buildingPrefab: {fileID: 662294240426233057, guid: 6a5fb0672a1121f4abba014a508edcd0, type: 3}
+    buildingType: 0
   soldierPrefab: {fileID: 4557711225302133155, guid: 083df150eeda5f04e8600791109ee62f, type: 3}
   buildingButtonPrefab: {fileID: 2527039994932372753, guid: e04d81a154b85084c9b570e22fd1d6cc, type: 3}
   soldierButtonPrefab: {fileID: 2527039994932372753, guid: 0136fb7ebea6ba642aed19b01ae3ba93, type: 3}
@@ -292,6 +297,7 @@ MonoBehaviour:
   gridManager: {fileID: 282830965}
   eventManager: {fileID: 282830970}
   prefabManager: {fileID: 282830967}
+  dataManager: {fileID: 282830971}
 --- !u!114 &282830970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,6 +310,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67dfe5597a81063459d110a3895bdbc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &282830971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 282830963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd9e78d43f9f5fd449db3472bd2678a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildingDatasToBeInitialized:
+  - actorWidth: 4
+    actorHeight: 4
+    actorName: BARRACKS
+    actorDescription: You can produce soldiers!
+    actorColor: {r: 0.8490566, g: 0.5226384, b: 0.13216448, a: 1}
+    actorSprite: {fileID: 21300000, guid: 73f8e185575a04f4ab2bfdd22675896e, type: 3}
+    actorHealth: 100
+    buildingType: 1
+  - actorWidth: 2
+    actorHeight: 3
+    actorName: POWER PLANT
+    actorDescription: You can get resources!
+    actorColor: {r: 0.19824673, g: 0.34588698, b: 0.764151, a: 1}
+    actorSprite: {fileID: 21300000, guid: a95ab1d81f9fe24429897c00bdfd70df, type: 3}
+    actorHealth: 50
+    buildingType: 0
 --- !u!1 &393447597
 GameObject:
   m_ObjectHideFlags: 0
@@ -1058,37 +1093,7 @@ MonoBehaviour:
     actorColor: {r: 0.8490566, g: 0.5226384, b: 0.13216448, a: 1}
     actorSprite: {fileID: 21300000, guid: 73f8e185575a04f4ab2bfdd22675896e, type: 3}
     actorHealth: 100
-    producableSoldiers:
-    - actorWidth: 1
-      actorHeight: 1
-      actorName: S1
-      actorDescription: Level 1 Soldier
-      actorColor: {r: 0.22927316, g: 0.8584906, b: 0.10123708, a: 1}
-      actorSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-      actorHealth: 10
-      attackPower: 10
-      attackSpeed: 1
-      movementSpeed: 3
-    - actorWidth: 1
-      actorHeight: 1
-      actorName: S2
-      actorDescription: Level 2 Soldier
-      actorColor: {r: 0.101960756, g: 0.85882354, b: 0.7694072, a: 1}
-      actorSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-      actorHealth: 10
-      attackPower: 5
-      attackSpeed: 1
-      movementSpeed: 3
-    - actorWidth: 1
-      actorHeight: 1
-      actorName: S3
-      actorDescription: Level 3 Soldier
-      actorColor: {r: 0.81195956, g: 0.101960756, b: 0.85882354, a: 1}
-      actorSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-      actorHealth: 10
-      attackPower: 2
-      attackSpeed: 1
-      movementSpeed: 3
+    buildingType: 0
   - actorWidth: 2
     actorHeight: 3
     actorName: POWER PLANT
@@ -1096,7 +1101,7 @@ MonoBehaviour:
     actorColor: {r: 0.19824673, g: 0.34588698, b: 0.764151, a: 1}
     actorSprite: {fileID: 21300000, guid: a95ab1d81f9fe24429897c00bdfd70df, type: 3}
     actorHealth: 50
-    producableSoldiers: []
+    buildingType: 0
 --- !u!1 &1062521634
 GameObject:
   m_ObjectHideFlags: 0
