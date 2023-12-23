@@ -7,7 +7,7 @@ using UnityEngine;
 
 // THIS CLASS IS THE PARENT CLASS OF THE BUILDINGS AND SOLDIERS
 
-public class BaseActor : MonoBehaviour
+public class BaseActor : MonoBehaviour, IPooledObject
 {
     protected ActorData actorData;
     private float currentHealth;
@@ -16,15 +16,17 @@ public class BaseActor : MonoBehaviour
     [SerializeField] private Transform actorGraphics;
     [SerializeField] private TextMeshPro actorNameText;
     [SerializeField] private GameObject fakeOutline;
+    [SerializeField] private HealthBarController healthBarController;
     private List<GridCell> occupiedCells = new List<GridCell>();
     protected GameManagers gameManagers;
 
     public Action OnActorDie { get; set; }
 
-    public virtual void Init(ActorData actorData, float cellSize)
+    public virtual void Init(ActorData actorData)
     {
+        gameManagers = GameManagers.Instance;
         this.actorData = actorData;
-        this.cellSize = cellSize;
+        this.cellSize = gameManagers.GridManager.GetCellSize();
         this.currentHealth = actorData.actorHealth;
         actorGraphics.localScale = new Vector3(GetActorWidth(), GetActorHeight(), 1f);
         actorSprite = GetComponentInChildren<SpriteRenderer>();
@@ -32,14 +34,16 @@ public class BaseActor : MonoBehaviour
         SetActorColor(actorData.actorColor);
         actorNameText.text = actorData.actorName;
         actorNameText.transform.localPosition = (new Vector2(actorData.actorWidth, actorData.actorHeight)) * cellSize / 2;
-        gameManagers = GameManagers.Instance;
+
+        healthBarController.SetHeathBar(actorData.actorHealth, currentHealth, 0);
     }
 
     public virtual void TakeDamage(float damageAmount)
     {
         currentHealth -= damageAmount;
+        healthBarController.SetHeathBar(actorData.actorHealth, currentHealth, damageAmount, true);
 
-        if (currentHealth <= 0 )
+        if (currentHealth <= 0)
         {
             Die();
         }
@@ -127,7 +131,7 @@ public class BaseActor : MonoBehaviour
 
     public virtual void SetActorLocation(Grid grid, GridCell targetCell)
     {
-        
+
     }
 
     public void SetActorOnTheGrid(Grid grid, int currentXIndex, int currentYIndex)
@@ -199,7 +203,7 @@ public class BaseActor : MonoBehaviour
 
         float closestDist = 1000f;
         GridCell closestCell = null;
-        for (int i = 0;i < neighbors.Count;i++)
+        for (int i = 0; i < neighbors.Count; i++)
         {
             float dist = Vector2.Distance(neighbors[i].GetCellPosition(), pos);
             if (dist < closestDist)
@@ -213,6 +217,21 @@ public class BaseActor : MonoBehaviour
 
     public virtual void OnRightClicked(GridCell cell, Grid grid)
     {
+        
+    }
 
+    public virtual void OnObjectGetFromPool()
+    {
+        
+    }
+
+    public virtual void OnObjectSendToPool()
+    {
+        
+    }
+
+    public virtual void OnObjectInstantiate()
+    {
+        
     }
 }

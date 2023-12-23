@@ -91,6 +91,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 123067185514993462, guid: 9ff8c8db7f56c994687a1a9486c12548, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4299013280875981026, guid: 9ff8c8db7f56c994687a1a9486c12548, type: 3}
       propertyPath: m_Name
       value: SoldierBase
@@ -188,8 +192,20 @@ MonoBehaviour:
   actorGraphics: {fileID: 7202646742768695980}
   actorNameText: {fileID: 137759131236878270}
   fakeOutline: {fileID: 2788772148743051834}
+  healthBarController: {fileID: 7869802319782475622}
 --- !u!4 &7202646742768695980 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7430348905791306733, guid: 9ff8c8db7f56c994687a1a9486c12548, type: 3}
   m_PrefabInstance: {fileID: 353840414404182337}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7869802319782475622 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7628588114601113127, guid: 9ff8c8db7f56c994687a1a9486c12548, type: 3}
+  m_PrefabInstance: {fileID: 353840414404182337}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eeb438639de9e641a333e0fb8af454f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

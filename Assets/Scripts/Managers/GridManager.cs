@@ -16,7 +16,7 @@ public class GridManager : MonoBehaviour
     private BaseActor currentActor;
     private BaseActor selectedActor;
 
-    private PrefabManager prefabManager;
+    private FactoryManager factoryManager;
 
     //private void Start()
     //{
@@ -25,7 +25,7 @@ public class GridManager : MonoBehaviour
 
     public void InitGrid()
     {
-        prefabManager = GameManagers.Instance.PrefabManager;
+        factoryManager = FactoryManager.Instance;
         grid = new Grid(gridWidth, gridHeight, PixelToWorldSize(sizeByPixel));
         gridMapController.SetGridMap(gridWidth, gridHeight, PixelToWorldSize(sizeByPixel));
         GetComponent<Pathfinding>().SetGrid(grid);
@@ -106,8 +106,9 @@ public class GridManager : MonoBehaviour
         if (selectedActor != null)
             selectedActor.ActorDeselected();
 
-        BuildingBase building = prefabManager.GetBuildingBase(buildingData);
-        building.Init(buildingData, PixelToWorldSize(sizeByPixel));
+        BaseActor actor = factoryManager.BuildingFactory.GetActor(buildingData);
+        BuildingBase building = actor as BuildingBase;
+        building.Init(buildingData);
         SetCurrentActor(building);
     }
 
@@ -130,8 +131,8 @@ public class GridManager : MonoBehaviour
 
         if (emptyCell == null) return;
 
-        SoldierBase soldier = prefabManager.GetSoldierBase();
-        soldier.Init(soldierData, PixelToWorldSize(sizeByPixel));
+        BaseActor actor = factoryManager.SoldierFactory.GetActor(soldierData);
+        SoldierBase soldier = actor as SoldierBase;
         TryToPlaceActor(emptyCell, soldier);
     }
 
@@ -152,4 +153,10 @@ public class GridManager : MonoBehaviour
             selectedActor.OnRightClicked(currentCell, grid);
         }
     }
+
+    public float GetCellSize()
+    {
+        return PixelToWorldSize(sizeByPixel);
+    }
+
 }

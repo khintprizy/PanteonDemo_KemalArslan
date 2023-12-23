@@ -261,12 +261,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eaf27206bdf5ef4dbae6097042287ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingPrefabDatas:
-  - buildingPrefab: {fileID: 662294240426233057, guid: 159fcd07c5e145c4e83ed74e718550e8, type: 3}
-    buildingType: 1
-  - buildingPrefab: {fileID: 662294240426233057, guid: 6a5fb0672a1121f4abba014a508edcd0, type: 3}
-    buildingType: 0
-  soldierPrefab: {fileID: 4557711225302133155, guid: 083df150eeda5f04e8600791109ee62f, type: 3}
   buildingButtonPrefab: {fileID: 2527039994932372753, guid: e04d81a154b85084c9b570e22fd1d6cc, type: 3}
   soldierButtonPrefab: {fileID: 2527039994932372753, guid: 0136fb7ebea6ba642aed19b01ae3ba93, type: 3}
 --- !u!114 &282830968
@@ -903,6 +897,84 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   productionMenuController: {fileID: 1056364382}
   informationMenuController: {fileID: 1419923800}
+--- !u!1 &996739035
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 996739036}
+  - component: {fileID: 996739037}
+  - component: {fileID: 996739039}
+  - component: {fileID: 996739038}
+  m_Layer: 0
+  m_Name: FactoryManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &996739036
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996739035}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &996739037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996739035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a585220b857cafe449eb0cccae8d64bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildingFactory: {fileID: 996739039}
+  soldierFactory: {fileID: 996739038}
+--- !u!114 &996739038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996739035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 159cb83f28919aa4abb62cbfc1a4b522, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soldierPrefab: {fileID: 4557711225302133155, guid: 083df150eeda5f04e8600791109ee62f, type: 3}
+--- !u!114 &996739039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996739035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 095c92515a0ba0d4a84d92d7543e4edf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildingPrefabDatas:
+  - buildingPrefab: {fileID: 662294240426233057, guid: 6a5fb0672a1121f4abba014a508edcd0, type: 3}
+    buildingType: 0
+  - buildingPrefab: {fileID: 662294240426233057, guid: 159fcd07c5e145c4e83ed74e718550e8, type: 3}
+    buildingType: 1
 --- !u!1 &1026132087
 GameObject:
   m_ObjectHideFlags: 0

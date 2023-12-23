@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class BuildingBase : BaseActor
 {
-    public override void Init(ActorData actorData, float cellSize)
+    public override void Init(ActorData actorData)
     {
-        base.Init(actorData, cellSize);
+        base.Init(actorData);
     }
 
     public override void SetActorLocation(Grid grid, GridCell targetCell)

@@ -10,9 +10,9 @@ public class SoldierBase : BaseActor
 
     private BaseActor targetActor;
 
-    public override void Init(ActorData actorData, float cellSize)
+    public override void Init(ActorData actorData)
     {
-        base.Init(actorData, cellSize);
+        base.Init(actorData);
 
         soldierData = actorData as SoldierData;
     }
@@ -120,10 +120,22 @@ public class SoldierBase : BaseActor
         base.OnActorClickedOnBoard();
 
         UIManager.Instance.GetInformationMenuController().SetThePanel(false);
+
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="cell"></param>
+    /// <param name="grid"></param>
     public override void OnRightClicked(GridCell cell, Grid grid)
     {
+        if (cell == GetFirstOccupiedCell())
+        {
+            Debug.Log("You cannot attack yourself!");
+            return;
+        }
+
         base.OnRightClicked(cell, grid);
 
         // If soldier is attacking, he/she will cancel it

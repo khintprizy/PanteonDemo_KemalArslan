@@ -32,3 +32,10 @@ public enum BuildingType
     BuildingNormal = 0,
     BuildingWithSoldiers = 1,
 }
+
+public interface IPooledObject
+{
+    void OnObjectGetFromPool();
+    void OnObjectSendToPool();
+    void OnObjectInstantiate();
+}
