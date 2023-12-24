@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Grid
@@ -73,28 +71,6 @@ public class Grid
 
         return (pos.x > maxX || pos.y > maxY || pos.x < 0 || pos.y < 0);
     }
-
-    //public List<GridCell> GetNeighbours(GridCell cell)
-    //{
-    //    List<GridCell> neighbors = new List<GridCell>();
-
-    //    for (int i = -1; i <= 1; i++)
-    //    {
-    //        for (int j = -1; j <= 1; j++)
-    //        {
-    //            if (i == 0 && j == 0) continue;
-
-    //            int checkX = cell.GetCellXIndex() + i;
-    //            int checkY = cell.GetCellYIndex() + j;
-
-    //            if (checkX >= 0 && checkX < gridWidth && checkY >= 0 && checkY < gridHeight)
-    //                neighbors.Add(cells[checkX, checkY]);
-    //        }
-    //    }
-
-    //    return neighbors;
-    //}
-
 
     // With following function we can get the cell by index, and if its not empty it will return the cell right of it.
     // And this recursive iteration will continue until it finds an empty cell

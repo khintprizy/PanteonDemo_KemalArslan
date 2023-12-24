@@ -94,13 +94,15 @@ public class SoldierBase : BaseActor
     private void StartAttacking(BaseActor targetActor)
     {
         this.targetActor = targetActor;
+
+        // I am adding StopAttacking function to target's Die event so soldier will stop attacking when target dies
         targetActor.OnActorDie += StopAttacking;
+
         attackCr = StartCoroutine(AttackCr(targetActor));
     }
 
     private void StopAttacking()
     {
-        //targetActor.OnActorDie -= StopAttacking;
         if (attackCr != null)
         {
             StopCoroutine(attackCr);
@@ -124,15 +126,11 @@ public class SoldierBase : BaseActor
     {
         base.OnActorClickedOnBoard();
 
+        // I am closing the info panel when soldier is selected
         UIManager.Instance.GetInformationMenuController().SetThePanel(false);
-
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="cell"></param>
-    /// <param name="grid"></param>
+
     public override void OnRightClicked(GridCell cell, Grid grid)
     {
         if (cell == GetFirstOccupiedCell())
@@ -151,7 +149,7 @@ public class SoldierBase : BaseActor
             // take the clicked actor, take the closest neighbor, move there and attack
             BaseActor targetActor = cell.GetOccupantActor();
 
-            GridCell closestCell = targetActor.GetClosestEmptyCell(cell);
+            GridCell closestCell = targetActor.GetClosestEmptyCell(cell, GetFirstOccupiedCell());
 
             if (closestCell == null) return;
 
@@ -165,9 +163,12 @@ public class SoldierBase : BaseActor
         }
     }
 
+
     public override void ActionWhileSelected(GridCell cell)
     {
         base.ActionWhileSelected(cell);
-        gameManagers.EventManager.OnCellOverWhileSoldierSelected?.Invoke(cell);
+
+        // Triggers the event for indicator to show cells status
+        gameManagers.EventManager.OnCellOverWhileSoldierSelected?.Invoke(GetFirstOccupiedCell(), cell);
     }
 }

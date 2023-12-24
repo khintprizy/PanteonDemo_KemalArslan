@@ -8,6 +8,7 @@ public class InformationMenuController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI buildingName;
     [SerializeField] private Image buildingImage;
     [SerializeField] private TextMeshProUGUI description;
+    [SerializeField] private TextMeshProUGUI healthText;
     [SerializeField] private Button moveButton;
     [SerializeField] private SoldierProductionController soldierProductionController;
     [SerializeField] private GameObject panel;
@@ -31,6 +32,7 @@ public class InformationMenuController : MonoBehaviour
         buildingName.text = data.actorName;
         buildingImage.sprite = data.actorUISprite;
         description.text = data.actorDescription;
+        healthText.text = "Max Health: " + data.actorHealth;
 
         soldierProductionController.gameObject.SetActive(false);
     }

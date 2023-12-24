@@ -30,6 +30,7 @@ public class BuildingBase : BaseActor
 
     public void PickBuildingFromGrid()
     {
+        if (IsDead) return;
         gameManagers.GridManager.SetCurrentActor(this);
         SetEmptyOccupiedCells();
     }

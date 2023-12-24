@@ -25,6 +25,11 @@ public class BaseActor : MonoBehaviour, IPooledObject
     public Action OnActorDie { get; set; }
     public bool IsDead { get => isDead; }
 
+    /// <summary>
+    /// Initialises the actor acccording to given data
+    /// </summary>
+    /// <param name="cell"></param>
+    /// <param name="grid"></param>
     public virtual void Init(ActorData actorData)
     {
         gameManagers = GameManagers.Instance;
@@ -63,7 +68,6 @@ public class BaseActor : MonoBehaviour, IPooledObject
         healthBarController.StopGhostText();
 
         SetEmptyOccupiedCells();
-        //Destroy(gameObject);
     }
 
     public virtual ActorData GetActorData()
@@ -111,6 +115,11 @@ public class BaseActor : MonoBehaviour, IPooledObject
 
     }
 
+    /// <summary>
+    /// Returns true if the given cell and according to size, all of the current cells are empty
+    /// </summary>
+    /// <param name="cell"></param>
+    /// <param name="grid"></param>
     public bool CheckIfCanBePlaced(Grid grid, GridCell targetCell)
     {
         bool canBePlaced = true;
@@ -142,6 +151,11 @@ public class BaseActor : MonoBehaviour, IPooledObject
 
     }
 
+    /// <summary>
+    /// This function occupies the grid for this actor
+    /// </summary>
+    /// <param name="cell"></param>
+    /// <param name="grid"></param>
     public void SetActorOnTheGrid(Grid grid, int currentXIndex, int currentYIndex)
     {
         SetActorColor(actorData.actorColor);
@@ -157,6 +171,11 @@ public class BaseActor : MonoBehaviour, IPooledObject
         }
     }
 
+    /// <summary>
+    /// When actor is removed from its place, this function clears the grid
+    /// </summary>
+    /// <param name="cell"></param>
+    /// <param name="grid"></param>
     protected void SetEmptyOccupiedCells()
     {
         for (int i = 0; i < occupiedCells.Count; i++)
@@ -182,7 +201,12 @@ public class BaseActor : MonoBehaviour, IPooledObject
         return occupiedCells[0];
     }
 
-    public List<GridCell> GetEmptyNeighbors()
+    /// <summary>
+    /// Returns the list of non occupied cells of the actor
+    /// </summary>
+    /// <param name="cell"></param>
+    /// <param name="grid"></param>
+    public List<GridCell> GetEmptyNeighbors(GridCell additionalCell = null)
     {
         List<GridCell> emptyNeigbrs = new List<GridCell>();
 
@@ -196,15 +220,26 @@ public class BaseActor : MonoBehaviour, IPooledObject
                 {
                     emptyNeigbrs.Add(cell);
                 }
+
+                if (additionalCell != null)
+                {
+                    if (additionalCell == cell)
+                        emptyNeigbrs.Add(cell);
+                }
             }
         }
 
         return emptyNeigbrs;
     }
 
-    public GridCell GetClosestEmptyCell(GridCell cell)
+    /// <summary>
+    /// Returns the closest empty cell closest to clicked cell
+    /// </summary>
+    /// <param name="cell"></param>
+    /// <param name="grid"></param>
+    public GridCell GetClosestEmptyCell(GridCell cell, GridCell soldierCell)
     {
-        List<GridCell> neighbors = GetEmptyNeighbors();
+        List<GridCell> neighbors = GetEmptyNeighbors(soldierCell);
 
         Vector2 pos = cell.GetCellPosition();
         if (neighbors.Count < 1) return null;
@@ -223,13 +258,21 @@ public class BaseActor : MonoBehaviour, IPooledObject
         return closestCell;
     }
 
+    /// <summary>
+    /// After selecting actor, this function cover what to do when right click on a cell
+    /// </summary>
+    /// <param name="cell"></param>
+    /// <param name="grid"></param>
     public virtual void OnRightClicked(GridCell cell, Grid grid)
     {
         
     }
 
+    //Following interface functions can be filled for specific things when pooling
+
     public virtual void OnObjectGetFromPool()
     {
+        // When it goes to pool it should be dead because i will use this actor again
         isDead = false;
     }
 

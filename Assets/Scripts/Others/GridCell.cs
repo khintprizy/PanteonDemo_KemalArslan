@@ -38,6 +38,11 @@ public class GridCell
         return cellPosition;
     }
 
+    public Vector2 GetMiddlePointOfTheCell()
+    {
+        return GetCellPosition() + new Vector2(.16f, .16f);
+    }
+
     public BaseActor GetOccupantActor()
     {
         return occupantActor;

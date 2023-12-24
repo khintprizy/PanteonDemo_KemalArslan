@@ -17,12 +17,7 @@ public class GridManager : MonoBehaviour
     private BaseActor selectedActor;
 
     private FactoryManager factoryManager;
-
-    //private void Start()
-    //{
-    //    InitGrid();
-    //}
-
+ 
     public void InitGrid()
     {
         factoryManager = FactoryManager.Instance;
@@ -31,6 +26,11 @@ public class GridManager : MonoBehaviour
         GetComponent<Pathfinding>().SetGrid(grid);
     }
 
+    /// <summary>
+    /// Returns the cell which cursor on
+    /// </summary>
+    /// <param name="cell"></param>
+    /// <param name="grid"></param>
     public GridCell GetCellAccordingTheMovingCursor(Vector2 worldPos)
     {
         GridCell cell = null;
@@ -94,6 +94,11 @@ public class GridManager : MonoBehaviour
         currentActor = actor;
     }
 
+    /// <summary>
+    /// Returns the world unit according to given pixel unit
+    /// </summary>
+    /// <param name="cell"></param>
+    /// <param name="grid"></param>
     private float PixelToWorldSize(float pixel)
     {
         return pixel / 100;
@@ -116,9 +121,14 @@ public class GridManager : MonoBehaviour
     {
         if (currentActor != null) return;
 
+        if (selectedActor.IsDead) return;
 
+
+        // First i tried to place the soldier to the closest cell to building
         List<GridCell> emptyCells = selectedActor.GetEmptyNeighbors();
         GridCell emptyCell = null;
+
+        // If there are no empty cell of the neighbor of the building, I placed it right by the cell until it finds empty cell
         if (emptyCells.Count < 1)
         {
             GridCell selectedBuildingCell = selectedActor.GetFirstOccupiedCell();
@@ -145,6 +155,7 @@ public class GridManager : MonoBehaviour
     {
         return selectedActor;
     }
+
 
     public void OnRightClicked()
     {

@@ -18,6 +18,7 @@ public class GameManagers : SingletonMaker<GameManagers>
 
     private void Start()
     {
+        // Initialising the game
         gridManager.InitGrid();
         DataManager.InitTheProductionMenu();
     }

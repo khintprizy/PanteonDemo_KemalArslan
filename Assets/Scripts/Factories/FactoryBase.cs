@@ -4,10 +4,15 @@ using UnityEngine;
 
 public abstract class FactoryBase : MonoBehaviour
 {
+    /// <summary>
+    /// Returns actor from the factory from pool system
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
     public abstract BaseActor GetActor(ActorData data);
 
-    //private List<GameObject> pooledObjects = new List<GameObject>();
 
+    // Different types of prefabs have different pool list
     [SerializeField] private List<PoolListData> poolListDatas;
 
     [SerializeField] private int instantiateCount;
