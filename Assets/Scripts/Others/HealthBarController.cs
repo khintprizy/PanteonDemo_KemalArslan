@@ -22,13 +22,19 @@ public class HealthBarController : MonoBehaviour
 
     private void SetGhostText(float damageAmount)
     {
+        StopGhostText();
+
+        ghostCoroutine = StartCoroutine(SetGhostCr(damageAmount));
+    }
+
+    public void StopGhostText()
+    {
         if (ghostCoroutine != null)
         {
             StopCoroutine(ghostCoroutine);
+            ghosText.gameObject.SetActive(false);
             ghostCoroutine = null;
         }
-
-        ghostCoroutine = StartCoroutine(SetGhostCr(damageAmount));
     }
 
     IEnumerator SetGhostCr(float damageAmount)

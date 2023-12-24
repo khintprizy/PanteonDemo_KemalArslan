@@ -20,7 +20,10 @@ public class BaseActor : MonoBehaviour, IPooledObject
     private List<GridCell> occupiedCells = new List<GridCell>();
     protected GameManagers gameManagers;
 
+    private bool isDead;
+
     public Action OnActorDie { get; set; }
+    public bool IsDead { get => isDead; }
 
     public virtual void Init(ActorData actorData)
     {
@@ -30,6 +33,7 @@ public class BaseActor : MonoBehaviour, IPooledObject
         this.currentHealth = actorData.actorHealth;
         actorGraphics.localScale = new Vector3(GetActorWidth(), GetActorHeight(), 1f);
         actorSprite = GetComponentInChildren<SpriteRenderer>();
+        actorSprite.sprite = actorData.actorSprite;
 
         SetActorColor(actorData.actorColor);
         actorNameText.text = actorData.actorName;
@@ -51,11 +55,15 @@ public class BaseActor : MonoBehaviour, IPooledObject
 
     protected virtual void Die()
     {
+        isDead = true;
+
         // I subscribed all the attacking soldiers to this event, so all of them will stop attacking
         OnActorDie?.Invoke();
 
+        healthBarController.StopGhostText();
+
         SetEmptyOccupiedCells();
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
 
     public virtual ActorData GetActorData()
@@ -222,7 +230,7 @@ public class BaseActor : MonoBehaviour, IPooledObject
 
     public virtual void OnObjectGetFromPool()
     {
-        
+        isDead = false;
     }
 
     public virtual void OnObjectSendToPool()

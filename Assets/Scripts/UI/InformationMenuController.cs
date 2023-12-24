@@ -29,7 +29,7 @@ public class InformationMenuController : MonoBehaviour
         currentBuilding = buildingBase;
 
         buildingName.text = data.actorName;
-        buildingImage.sprite = data.actorSprite;
+        buildingImage.sprite = data.actorUISprite;
         description.text = data.actorDescription;
 
         soldierProductionController.gameObject.SetActive(false);

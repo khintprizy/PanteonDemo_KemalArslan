@@ -2,9 +2,12 @@ using UnityEngine;
 
 public class BuildingBase : BaseActor
 {
+    private BuildingFactory factory;
+
     public override void Init(ActorData actorData)
     {
         base.Init(actorData);
+        factory = FactoryManager.Instance.BuildingFactory;
     }
 
     public override void SetActorLocation(Grid grid, GridCell targetCell)
@@ -48,5 +51,11 @@ public class BuildingBase : BaseActor
     {
         base.OnRightClicked(cell, grid);
         Debug.Log("Buildings can not attack!");
+    }
+
+    protected override void Die()
+    {
+        base.Die();
+        factory.SendObjectToPool(gameObject, actorData.poolType);
     }
 }

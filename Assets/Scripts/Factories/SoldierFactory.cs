@@ -8,15 +8,10 @@ public class SoldierFactory : FactoryBase
 
     public override BaseActor GetActor(ActorData data)
     {
-        GameObject go = Instantiate(soldierPrefab);
+        GameObject go = GetObjectFromPool(soldierPrefab, data.poolType);
         SoldierBase soldierBase = go.GetComponent<SoldierBase>();
         soldierBase.Init(data);
         return soldierBase;
     }
 
-    //public SoldierBase GetSoldierBase()
-    //{
-    //    GameObject go = Instantiate(soldierPrefab);
-    //    return go.GetComponent<SoldierBase>();
-    //}
 }

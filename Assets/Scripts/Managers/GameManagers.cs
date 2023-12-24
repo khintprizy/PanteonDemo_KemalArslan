@@ -14,10 +14,11 @@ public class GameManagers : SingletonMaker<GameManagers>
     public GridManager GridManager { get => gridManager; }
     public EventManager EventManager { get => eventManager; }
     public PrefabManager PrefabManager { get => prefabManager; }
+    public DataManager DataManager { get => dataManager; }
 
     private void Start()
     {
         gridManager.InitGrid();
-        dataManager.InitTheProductionMenu();
+        DataManager.InitTheProductionMenu();
     }
 }

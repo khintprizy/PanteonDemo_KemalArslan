@@ -78,37 +78,7 @@ MonoBehaviour:
   actorNameText: {fileID: 4006413797989671676}
   fakeOutline: {fileID: 6126514765305648912}
   healthBarController: {fileID: 6577481623119909412}
-  producableSoldiers:
-  - actorWidth: 1
-    actorHeight: 1
-    actorName: S1
-    actorDescription: Level 1 Soldier
-    actorColor: {r: 0.22927316, g: 0.8584906, b: 0.10123708, a: 1}
-    actorSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-    actorHealth: 10
-    attackPower: 10
-    attackSpeed: 1
-    movementSpeed: 3
-  - actorWidth: 1
-    actorHeight: 1
-    actorName: S2
-    actorDescription: Level 2 Soldier
-    actorColor: {r: 0.101960756, g: 0.85882354, b: 0.7694072, a: 1}
-    actorSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-    actorHealth: 10
-    attackPower: 5
-    attackSpeed: 1
-    movementSpeed: 3
-  - actorWidth: 1
-    actorHeight: 1
-    actorName: S3
-    actorDescription: Level 3 Soldier
-    actorColor: {r: 0.81195956, g: 0.101960756, b: 0.85882354, a: 1}
-    actorSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-    actorHealth: 10
-    attackPower: 2
-    attackSpeed: 1
-    movementSpeed: 3
+  producableSoldierTypes: 000000000100000002000000
 --- !u!114 &4006413797989671676 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 137759131236878270, guid: 14afbaa29567f02499a5435861416742, type: 3}

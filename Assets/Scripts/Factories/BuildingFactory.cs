@@ -14,7 +14,8 @@ public class BuildingFactory : FactoryBase
         // I cast the data to BuildingData
         buildingData = data as BuildingData; 
 
-        GameObject go = Instantiate(GetThePrefab(buildingData.buildingType));
+        //GameObject go = Instantiate(GetThePrefab(buildingData.buildingType));
+        GameObject go = GetObjectFromPool(GetThePrefab(buildingData.buildingType), buildingData.poolType);
         BuildingBase buildingBase = go.GetComponent<BuildingBase>();
         buildingBase.Init(buildingData);
         return buildingBase;

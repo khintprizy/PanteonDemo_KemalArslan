@@ -10,11 +10,14 @@ public class SoldierBase : BaseActor
 
     private BaseActor targetActor;
 
+    private SoldierFactory factory;
+
     public override void Init(ActorData actorData)
     {
         base.Init(actorData);
 
         soldierData = actorData as SoldierData;
+        factory = FactoryManager.Instance.SoldierFactory;
     }
 
     public override void SetActorLocation(Grid grid, GridCell targetCell)
@@ -79,12 +82,12 @@ public class SoldierBase : BaseActor
 
     IEnumerator AttackCr(BaseActor targetActor)
     {
-        if (targetActor == null) yield break;
+        if (targetActor.IsDead) yield break;
         targetActor.TakeDamage(soldierData.attackPower);
 
         yield return new WaitForSeconds(soldierData.attackSpeed);
 
-        if (targetActor == null) yield break;
+        if (targetActor.IsDead) yield break;
         attackCr = StartCoroutine(AttackCr(targetActor));
     }
 
@@ -113,6 +116,8 @@ public class SoldierBase : BaseActor
         {
             targetActor.OnActorDie -= StopAttacking;
         }
+
+        factory.SendObjectToPool(gameObject, actorData.poolType);
     }
 
     public override void OnActorClickedOnBoard()

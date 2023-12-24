@@ -244,11 +244,14 @@ MonoBehaviour:
     actorName: S1
     actorDescription: Level 1 Soldier
     actorColor: {r: 0.24567749, g: 0.9150943, b: 0.056114297, a: 1}
-    actorSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+    actorUISprite: {fileID: 0}
+    actorSprite: {fileID: 0}
     actorHealth: 3
+    poolType: 0
     attackPower: 0
     attackSpeed: 0
     movementSpeed: 0
+    soldierType: 0
 --- !u!114 &282830967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,17 +325,71 @@ MonoBehaviour:
     actorName: BARRACKS
     actorDescription: You can produce soldiers!
     actorColor: {r: 0.8490566, g: 0.5226384, b: 0.13216448, a: 1}
-    actorSprite: {fileID: 21300000, guid: 73f8e185575a04f4ab2bfdd22675896e, type: 3}
+    actorUISprite: {fileID: 21300000, guid: 73f8e185575a04f4ab2bfdd22675896e, type: 3}
+    actorSprite: {fileID: 21300000, guid: a10b5125f55ce0942b65e49ae89f2f4f, type: 3}
     actorHealth: 100
+    poolType: 1
     buildingType: 1
   - actorWidth: 2
     actorHeight: 3
     actorName: POWER PLANT
     actorDescription: You can get resources!
     actorColor: {r: 0.19824673, g: 0.34588698, b: 0.764151, a: 1}
-    actorSprite: {fileID: 21300000, guid: a95ab1d81f9fe24429897c00bdfd70df, type: 3}
+    actorUISprite: {fileID: 21300000, guid: a95ab1d81f9fe24429897c00bdfd70df, type: 3}
+    actorSprite: {fileID: 21300000, guid: a10b5125f55ce0942b65e49ae89f2f4f, type: 3}
     actorHealth: 50
+    poolType: 0
     buildingType: 0
+  - actorWidth: 1
+    actorHeight: 2
+    actorName: TREE
+    actorDescription: Just a tree
+    actorColor: {r: 1, g: 1, b: 1, a: 1}
+    actorUISprite: {fileID: 21300000, guid: c2fd587f5c8108f4899d0155f5e92f2a, type: 3}
+    actorSprite: {fileID: 21300000, guid: 70c3e5c7d82c7bf48ac7d165ac670d36, type: 3}
+    actorHealth: 25
+    poolType: 0
+    buildingType: 0
+  soldierDatas:
+  - actorWidth: 1
+    actorHeight: 1
+    actorName: S1
+    actorDescription: Soldier 1
+    actorColor: {r: 0.22927316, g: 0.8584906, b: 0.10123708, a: 1}
+    actorUISprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+    actorSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+    actorHealth: 10
+    poolType: 2
+    attackPower: 10
+    attackSpeed: 1
+    movementSpeed: 3
+    soldierType: 0
+  - actorWidth: 1
+    actorHeight: 1
+    actorName: S2
+    actorDescription: Soldier 2
+    actorColor: {r: 0.101960756, g: 0.85882354, b: 0.7694072, a: 1}
+    actorUISprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+    actorSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+    actorHealth: 10
+    poolType: 2
+    attackPower: 5
+    attackSpeed: 1
+    movementSpeed: 3
+    soldierType: 1
+  - actorWidth: 1
+    actorHeight: 1
+    actorName: S3
+    actorDescription: Soldier 3
+    actorColor: {r: 0.81195956, g: 0.101960756, b: 0.85882354, a: 1}
+    actorUISprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+    actorSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+    actorHealth: 10
+    poolType: 2
+    attackPower: 2
+    attackSpeed: 1
+    movementSpeed: 3
+    soldierType: 2
 --- !u!1 &393447597
 GameObject:
   m_ObjectHideFlags: 0
@@ -957,6 +1014,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159cb83f28919aa4abb62cbfc1a4b522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  poolListDatas:
+  - poolType: 2
+    poolList: []
+  instantiateCount: 1
   soldierPrefab: {fileID: 4557711225302133155, guid: 083df150eeda5f04e8600791109ee62f, type: 3}
 --- !u!114 &996739039
 MonoBehaviour:
@@ -970,6 +1031,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 095c92515a0ba0d4a84d92d7543e4edf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  poolListDatas:
+  - poolType: 0
+    poolList: []
+  - poolType: 1
+    poolList: []
+  - poolType: 1
+    poolList: []
+  instantiateCount: 1
   buildingPrefabDatas:
   - buildingPrefab: {fileID: 662294240426233057, guid: 6a5fb0672a1121f4abba014a508edcd0, type: 3}
     buildingType: 0
@@ -1163,16 +1232,20 @@ MonoBehaviour:
     actorName: BARRACKS
     actorDescription: You can produce soldiers!
     actorColor: {r: 0.8490566, g: 0.5226384, b: 0.13216448, a: 1}
-    actorSprite: {fileID: 21300000, guid: 73f8e185575a04f4ab2bfdd22675896e, type: 3}
+    actorUISprite: {fileID: 0}
+    actorSprite: {fileID: 0}
     actorHealth: 100
+    poolType: 0
     buildingType: 0
   - actorWidth: 2
     actorHeight: 3
     actorName: POWER PLANT
     actorDescription: You can get resources!
     actorColor: {r: 0.19824673, g: 0.34588698, b: 0.764151, a: 1}
-    actorSprite: {fileID: 21300000, guid: a95ab1d81f9fe24429897c00bdfd70df, type: 3}
+    actorUISprite: {fileID: 0}
+    actorSprite: {fileID: 0}
     actorHealth: 50
+    poolType: 0
     buildingType: 0
 --- !u!1 &1062521634
 GameObject:
