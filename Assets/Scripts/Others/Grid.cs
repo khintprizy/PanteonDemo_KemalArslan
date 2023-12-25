@@ -8,6 +8,8 @@ public class Grid
 
     private GridCell[,] cells;
 
+    int occupiedCellCount = 0;
+
     public Grid(int cellHeight, int cellWidth, float cellSize)
     {
         // constructor of the grid
@@ -31,7 +33,7 @@ public class Grid
         {
             for (int j = 0; j < cellHeight; j++)
             {
-                cells[i, j].SetNeighbours();
+                cells[i, j].SetNeighbours(1);
             }
         }
     }
@@ -104,6 +106,21 @@ public class Grid
         }
 
         return GetCell(index);
+    }
+
+    public void ChangeOccupiedCellCount(int amount)
+    {
+        occupiedCellCount += amount;
+    }
+
+    public bool IsGridFull()
+    {
+        return (occupiedCellCount >= (cells.Length));
+    }
+
+    public int GetOccupiedCellCount()
+    {
+        return occupiedCellCount;
     }
 
     public int GetGridWidth() { return gridWidth; }

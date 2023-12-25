@@ -16,7 +16,7 @@ public class BuildingBase : BaseActor
 
         transform.position = targetCell.GetCellPosition();
 
-        SetActorOnTheGrid(grid, targetCell.GetCellXIndex(), targetCell.GetCellYIndex());
+        SetActorOnTheGrid(grid, targetCell);
         ActorDeselected();
     }
 

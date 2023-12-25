@@ -26,6 +26,8 @@ public class GridManager : MonoBehaviour
         GetComponent<Pathfinding>().SetGrid(grid);
     }
 
+    //public Grid GetGrid() { return grid; }
+
     /// <summary>
     /// Returns the cell which cursor on
     /// </summary>
@@ -125,25 +127,56 @@ public class GridManager : MonoBehaviour
 
 
         // First i tried to place the soldier to the closest cell to building
-        List<GridCell> emptyCells = selectedActor.GetEmptyNeighbors();
-        GridCell emptyCell = null;
+        List<GridCell> emptyCells = selectedActor.GetEmptyNeighbors(1);
+        GridCell emptyCell = GetEmptyCellRecursive();
 
-        // If there are no empty cell of the neighbor of the building, I placed it right by the cell until it finds empty cell
-        if (emptyCells.Count < 1)
-        {
-            GridCell selectedBuildingCell = selectedActor.GetFirstOccupiedCell();
-            emptyCell = grid.GetGridCellUntilEmpty(selectedBuildingCell.GetCellXIndex(), selectedBuildingCell.GetCellYIndex());
-        }
-        else
-        {
-            emptyCell = selectedActor.GetEmptyNeighbors()[0];
-        }
+        //// If there are no empty cell of the neighbor of the building, I placed it right by the cell until it finds empty cell
+        //if (emptyCells.Count < 1)
+        //{
+        //    GridCell selectedBuildingCell = selectedActor.GetFirstOccupiedCell();
+        //    emptyCell = grid.GetGridCellUntilEmpty(selectedBuildingCell.GetCellXIndex(), selectedBuildingCell.GetCellYIndex());
+        //}
+        //else
+        //{
+        //    emptyCell = selectedActor.GetEmptyNeighbors(1)[0];
+        //}
 
         if (emptyCell == null) return;
 
         BaseActor actor = factoryManager.SoldierFactory.GetActor(soldierData);
         SoldierBase soldier = actor as SoldierBase;
         TryToPlaceActor(emptyCell, soldier);
+    }
+
+    private GridCell GetEmptyCellRecursive()
+    {
+        int degree = 1;
+
+        return GetCell(degree);
+
+        GridCell GetCell(int dgr)
+        {
+            if (grid.IsGridFull()) return null;
+
+            List<GridCell> emptyCells = selectedActor.GetEmptyNeighbors(dgr);
+            GridCell emptyCell = null;
+
+            // If there are no empty cell of the neighbor of the building, I placed it right by the cell until it finds empty cell
+            if (emptyCells.Count < 1)
+            {
+                //GridCell selectedBuildingCell = selectedActor.GetFirstOccupiedCell();
+                //emptyCell = grid.GetGridCellUntilEmpty(selectedBuildingCell.GetCellXIndex(), selectedBuildingCell.GetCellYIndex());
+                degree++;
+                return GetCell(degree);
+            }
+            else
+            {
+                emptyCell = selectedActor.GetEmptyNeighbors(dgr)[0];
+                return emptyCell;
+            }
+        }
+
+        
     }
 
     public void SetSelectedActor(BaseActor actor)

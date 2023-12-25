@@ -26,7 +26,7 @@ public class SoldierBase : BaseActor
 
         transform.position = targetCell.GetCellPosition();
 
-        SetActorOnTheGrid(grid, targetCell.GetCellXIndex(), targetCell.GetCellYIndex());
+        SetActorOnTheGrid(grid, targetCell);
     }
 
     private void StartTweenMovement(Grid grid, GridCell targetCell, BaseActor targetActor)
@@ -40,6 +40,13 @@ public class SoldierBase : BaseActor
 
         // I got the path here
         List<GridCell> path = gameManagers.Pathfinder.FindPath(startCell, targetCell);
+        
+        List<GridCell> tempCells = new List<GridCell>();
+
+        for (int i = 0; i < path.Count; i++)
+        {
+            tempCells.Add(path[i]);
+        }
 
         gameManagers.EventManager.OnSoldierStartToMove?.Invoke();
 
@@ -51,7 +58,8 @@ public class SoldierBase : BaseActor
 
         // I set current cell empty and targetcell occupied
         SetEmptyOccupiedCells();
-        SetActorOnTheGrid(grid, targetCell.GetCellXIndex(), targetCell.GetCellYIndex());
+
+        //SetActorOnTheGrid(grid, targetCell.GetCellXIndex(), targetCell.GetCellYIndex());
 
 
         // With this loop, we move to cell after cell of the path
@@ -71,13 +79,50 @@ public class SoldierBase : BaseActor
                 transform.position = Vector2.Lerp(start, destination, t);
                 yield return null;
             }
+
+            tempCells.Remove(path[i]);
+
+            if (CheckIfPathIsOccupied(tempCells))
+            {
+                tempCells.Clear();
+
+                if (targetCell.IsCellOccupied())
+                {
+
+                    SetActorOnTheGrid(grid, path[i]);
+
+                    BaseActor actor = targetCell.GetOccupantActor();
+                    GridCell neighborCell = actor.GetClosestEmptyCell(path[i]);
+
+                    StartTweenMovement(grid, neighborCell, null);
+
+                    yield break;
+                }
+
+                SetActorOnTheGrid(grid, path[i]);
+                StartTweenMovement(grid, targetCell, targetActor);
+
+                yield break;
+            }
         }
+
+        SetActorOnTheGrid(grid, targetCell);
 
         // I will start AttackCoroutine here
         // I will hold my coroutine in a variable so i can cancel it if attacking stops
 
         if (targetActor != null)
             StartAttacking(targetActor);
+    }
+
+    private bool CheckIfPathIsOccupied(List<GridCell> path)
+    {
+        for (int i = 0; i < path.Count; i++)
+        {
+            if (path[i].IsCellOccupied()) return true;
+        }
+
+        return false;
     }
 
     IEnumerator AttackCr(BaseActor targetActor)

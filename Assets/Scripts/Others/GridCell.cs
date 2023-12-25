@@ -48,11 +48,11 @@ public class GridCell
         return occupantActor;
     }
 
-    public void SetNeighbours()
+    public void SetNeighbours(int degree)
     {
-        for (int i = -1; i <= 1; i++)
+        for (int i = -degree; i <= degree; i++)
         {
-            for (int j = -1; j <= 1; j++)
+            for (int j = -degree; j <= degree; j++)
             {
                 if (i == 0 && j == 0) continue;
 
@@ -70,8 +70,36 @@ public class GridCell
         return neighbors;
     }
 
+    public List<GridCell> GetNeighborsDynamic(int degree)
+    {
+        List<GridCell> nbrs = new List<GridCell>();
+
+        for (int i = -degree; i <= degree; i++)
+        {
+            for (int j = -degree; j <= degree; j++)
+            {
+                if (i == 0 && j == 0) continue;
+
+                int checkX = GetCellXIndex() + i;
+                int checkY = GetCellYIndex() + j;
+
+                if (checkX >= 0 && checkX < grid.GetGridWidth() && checkY >= 0 && checkY < grid.GetGridHeight())
+                    nbrs.Add(grid.GetGridCell(checkX, checkY));
+            }
+        }
+
+        return nbrs;
+    }
+
     public bool IsCellOccupied() { return occupantActor != null; }
-    public void SetCellOccupation(BaseActor occupant) { occupantActor = occupant; }
+    public void SetCellOccupation(BaseActor occupant) 
+    {
+        if (occupant == null)
+            grid.ChangeOccupiedCellCount(-1);
+        else
+            grid.ChangeOccupiedCellCount(1);
+        occupantActor = occupant; 
+    }
 
     public int GetCellXIndex() {  return cellXIndex; }
     public int GetCellYIndex() {  return cellYIndex; }

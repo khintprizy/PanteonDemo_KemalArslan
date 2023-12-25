@@ -156,15 +156,18 @@ public class BaseActor : MonoBehaviour, IPooledObject
     /// </summary>
     /// <param name="cell"></param>
     /// <param name="grid"></param>
-    public void SetActorOnTheGrid(Grid grid, int currentXIndex, int currentYIndex)
+    public void SetActorOnTheGrid(Grid grid, GridCell targetCell)
     {
+        int x = targetCell.GetCellXIndex();
+        int y = targetCell.GetCellYIndex();
+
         SetActorColor(actorData.actorColor);
 
         for (int i = 0; i < GetActorWidth(); i++)
         {
             for (int j = 0; j < GetActorHeight(); j++)
             {
-                GridCell cell = grid.GetGridCell(currentXIndex + i, currentYIndex + j);
+                GridCell cell = grid.GetGridCell(x + i, y + j);
                 cell.SetCellOccupation(this);
                 occupiedCells.Add(cell);
             }
@@ -206,13 +209,13 @@ public class BaseActor : MonoBehaviour, IPooledObject
     /// </summary>
     /// <param name="cell"></param>
     /// <param name="grid"></param>
-    public List<GridCell> GetEmptyNeighbors(GridCell additionalCell = null)
+    public List<GridCell> GetEmptyNeighbors(int degree, GridCell additionalCell = null)
     {
         List<GridCell> emptyNeigbrs = new List<GridCell>();
 
         for (int i = 0; i < occupiedCells.Count; i++)
         {
-            List<GridCell> neiCells = occupiedCells[i].GetNeighbours();
+            List<GridCell> neiCells = occupiedCells[i].GetNeighborsDynamic(degree);
             for (int j = 0; j < neiCells.Count; j++)
             {
                 GridCell cell = neiCells[j];
@@ -237,9 +240,9 @@ public class BaseActor : MonoBehaviour, IPooledObject
     /// </summary>
     /// <param name="cell"></param>
     /// <param name="grid"></param>
-    public GridCell GetClosestEmptyCell(GridCell cell, GridCell soldierCell)
+    public GridCell GetClosestEmptyCell(GridCell cell, GridCell soldierCell = null)
     {
-        List<GridCell> neighbors = GetEmptyNeighbors(soldierCell);
+        List<GridCell> neighbors = GetEmptyNeighbors(1, soldierCell);
 
         Vector2 pos = cell.GetCellPosition();
         if (neighbors.Count < 1) return null;
