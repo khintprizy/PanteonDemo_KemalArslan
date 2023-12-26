@@ -40,7 +40,13 @@ public class SoldierBase : BaseActor
 
         // I got the path here
         List<GridCell> path = gameManagers.Pathfinder.FindPath(startCell, targetCell);
-        
+
+        if (path == null)
+        {
+            ActorDeselected();
+            yield break;
+        }
+
         List<GridCell> tempCells = new List<GridCell>();
 
         for (int i = 0; i < path.Count; i++)
@@ -50,11 +56,7 @@ public class SoldierBase : BaseActor
 
         gameManagers.EventManager.OnSoldierStartToMove?.Invoke();
 
-        if (path == null)
-        {
-            ActorDeselected();
-            yield break;
-        }
+        
 
         // I set current cell empty and targetcell occupied
         SetEmptyOccupiedCells();
@@ -73,12 +75,16 @@ public class SoldierBase : BaseActor
 
             float t = 0;
 
+            path[i].SetCellOccupation(this);
+
             while (t < 1)
             {
                 t = t + ((Time.deltaTime / speed) * soldierData.movementSpeed);
                 transform.position = Vector2.Lerp(start, destination, t);
                 yield return null;
             }
+
+            path[i].SetCellOccupation(null);
 
             tempCells.Remove(path[i]);
 
